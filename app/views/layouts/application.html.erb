@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>gSchool Submission App<%= content_for?(:title) ? yield(:title) : "gSchool Submission App" %></title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag :defaults %>
+    <%= csrf_meta_tag %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+
+    <div class="header_wrapper">
+
+      <div class="logo">
+        <%= link_to "gSchool App", root_url %>
+      </diiv>
+
+      <div id="login_user_status">  
+       <% if user_signed_in? %>  
+        <%= current_user.email  %>   
+        |  
+        <%= link_to "Sign out", destroy_user_session_path %>  
+       <% else %>  
+        <em>Not Signed in</em><br/><br/><br/><br/><br/>
+        <%= link_to 'Sign in', new_user_session_path%> 
+        <%= link_to 'Sign up', new_user_registration_path%><br/><br/>
+       <% end %>  
+       </div>  
+    </div>
+
+    <div id="container">
+      <% flash.each do |key, value| %>
+      <div><%= value %></div>
+      <% end %>
+      <%= content_tag :h1, yield(:title) if show_title? %>
+      <%= yield %>
+    </div>
+
+  </body>
+</html>
