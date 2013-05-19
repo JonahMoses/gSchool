@@ -1,6 +1,22 @@
 class AssetsController < ApplicationController
   before_filter :authenticate_user!
 
+
+
+#this action will let the users download the files (after a simple authorization check)  
+  def get  
+    asset = current_user.assets.find_by_id(params[:id])
+      if asset
+        send_file asset.uploaded_file.path, :type => asset.uploaded_file_content_type
+      else
+        flash[:error] = "Don't be Cheeky! Mind your own assets!"
+        redirect_to assets_path
+      end
+  end
+
+
+
+
   def index
     @assets = current_user.assets
   end

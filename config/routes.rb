@@ -2,7 +2,7 @@ Gschoolapp::Application.routes.draw do
   resources :assets
 
   devise_for :users do get '/users/sign_out' => 'devise/sessions#destroy' end
-    
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -61,4 +61,7 @@ Gschoolapp::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
   root to: 'home#index'
+
+  #this route is for file downloads
+  match "assets/get/:id" => "assets#get", :as => "download"
 end
